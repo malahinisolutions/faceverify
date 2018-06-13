@@ -17,9 +17,7 @@ class Verification extends Front_Controller {
 
 	public function index()
 	{
-		if (!$this->tank_auth->is_logged_in(FALSE)) {									// logged in
-			redirect('login');
-		}
+		 
 		if (is_null($datas = $this->users->can_user_verifided($this->session->userdata('user_id'))))
 		{
 			redirect('personal_information');

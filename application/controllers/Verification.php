@@ -23,7 +23,7 @@ class Verification extends Front_Controller {
 		if (is_null($datas = $this->users->can_user_verifided($this->session->userdata('user_id'))))
 		{
 			redirect('personal_information');
-		}else{
+		}else{ $data['status']=$datas->status;
 			if(!$datas->document_type && !$datas->document_path)
 			{
 				redirect('upload_document');

@@ -1,20 +1,18 @@
 <div class="navbar topnav">
-    <div class="navbar-inner">
-        <div class="container">
-            <div class="nav-collapse ">
-                <div class="col-md-4 col-sm-4 pull-right">
-                    <div class="dropdown pull-right">
-                        <a  class="btn  dropdown-toggle" data-toggle="dropdown" style="color: #fff;">
-                          <?php if($name){ echo $name;}else{ echo $this->session->userdata('username');}?>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" role="menu">
-                            <a class="dropdown-item" href="<?php echo  base_url('login/logout');?>">Log Out</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+   <div class="navbar-inner">
+       <div class="container">
+           <div class="nav-collapse ">
+               <div class="col-md-4 col-sm-4 pull-right">
+                   <div class="dropdown pull-right">
+           <button onclick="myFunction()" class="dropbtn dropdown-toggle">  <?php if($name){ echo $name;}else{ echo $this->session->userdata('username');}?></button>
+             <div id="myDropdown" class="dropdown-content">
+                <a   href="<?php echo  base_url('login/logout');?>">Log Out</a>
+             </div>
+           </div>
+               </div>
+           </div>
+       </div>
+   </div>
 </div>
 <section class="pb_cover_v3  cover-bg-indigo cover-bg-opacity text-left pb_gradient_v1 pb_slant-light" id="section-home">
   <div class="container">
@@ -78,15 +76,15 @@
                           <input id="fileupload" type="file" name="document" <?php if($document_path==0){echo 'required="required" data-bvalidator="extension[jpeg:jpg:png],required" data-bvalidator-msg="Please select file of type .jpeg, .jpg or .png"';} ?>  />
                         </div>
                         <div id="start" class="upload-box">
-                          <?php  if($document_path !='0') { ?>
+                          <?php   if($document_path !='0' && !is_null($document_path)) { ?>
                           <img alt="Document" src="<?php echo base_url('upload/document/').$document_path;?>" />
                           <?php } ?>
                         </div>
                       </div>
                     <div class="form-group">
-                        <div class="pull-right">
-                            <INPUT TYPE="button" VALUE="Back" class="previous-b"  onClick="history.go(-1)" >
-                            <button class="btn btn-primary btn-lg btn-block pb_btn-pill  btn-shadow-blue"   type="submit">Continue &raquo;</button>
+                        <div style="clear:both; float: right;">
+                            <INPUT TYPE="button" VALUE="Back" class="previous-b btn btn-lg pb_btn-pill  btn-shadow-blue"  onClick="history.go(-1)"  style="width:150px; float: left;">
+                            <button style="width:150px; float: left;" class="btn btn-primary btn-lg btn-block pb_btn-pill  btn-shadow-blue"   type="submit">Continue &raquo;</button>
                         </div>
                     </div>
                     </form>

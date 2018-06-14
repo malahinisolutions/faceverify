@@ -1,20 +1,18 @@
 <div class="navbar topnav">
-    <div class="navbar-inner">
-        <div class="container">
-            <div class="nav-collapse ">
-                <div class="col-md-4 col-sm-4 pull-right">
-                    <div class="dropdown pull-right">
-                        <a  class="btn  dropdown-toggle" data-toggle="dropdown" style="color: #fff;">
-                          <?php if($name){ echo $name;}else{ echo $this->session->userdata('username');}?>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="<?php echo  base_url('login/logout');?>">Log Out</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+   <div class="navbar-inner">
+       <div class="container">
+           <div class="nav-collapse ">
+               <div class="col-md-4 col-sm-4 pull-right">
+                   <div class="dropdown pull-right">
+           <button onclick="myFunction()" class="dropbtn dropdown-toggle">  <?php if($name){ echo $name;}else{ echo $this->session->userdata('username');}?></button>
+             <div id="myDropdown" class="dropdown-content">
+                <a   href="<?php echo  base_url('login/logout');?>">Log Out</a>
+             </div>
+           </div>
+               </div>
+           </div>
+       </div>
+   </div>
 </div>
 <section class="pb_cover_v3 overflow-hidden cover-bg-indigo cover-bg-opacity text-left pb_gradient_v1 pb_slant-light" id="section-home">
   <div class="container">

@@ -537,10 +537,11 @@ class Users extends CI_Model
 
 	function can_user_verifided($user_id)
 	{
-		$this->db->select('1', FALSE);
+		 
 		$this->db->where('user_id', $user_id);
 		$query = $this->db->get('user_verifications');
-		return $query->num_rows() == 1;
+		if($query->num_rows() == 1) return $query->row();
+		return NULL;
 	}
 
 	function get_user_verification_status($user_id)

@@ -16,7 +16,7 @@ class Complete_verification extends Front_Controller {
 
   function index()
   {
-		if (!$this->tank_auth->is_logged_in(FALSE)) {									// logged in
+		if (!$this->tank_auth->is_logged_in()) {									// logged in
 			redirect('login');
 		}
 		$data['finish']="";

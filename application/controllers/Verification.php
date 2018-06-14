@@ -17,13 +17,21 @@ class Verification extends Front_Controller {
 
 	public function index()
 	{
-		 
+		if (!$this->tank_auth->is_logged_in()) {	 								// logged in
+		 redirect('login');
+	 }
 		if (is_null($datas = $this->users->can_user_verifided($this->session->userdata('user_id'))))
 		{
 			redirect('personal_information');
 		}else{
-			$status1=$this->users->get_user_verification_status($this->session->userdata('user_id'));
-			$data['status']=$status1->status;
+			if(!$datas->document_type && !$datas->document_path)
+			{
+				redirect('upload_document');
+			}
+			if(!$datas->user_image)
+			{
+				redirect('capture_image');
+			}
 		}
 		$data['name'] = empty($this->session->userdata('name')) ? $this->session->userdata('username') : $this->session->userdata('name');
 		$data['page_title']='Verification';

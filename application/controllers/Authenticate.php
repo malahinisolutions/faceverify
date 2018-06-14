@@ -16,7 +16,7 @@ class Authenticate extends Front_Controller {
 
   public function index()
   {
-		if (!$this->tank_auth->is_logged_in(FALSE)) {									// logged in
+		if (!$this->tank_auth->is_logged_in()) {									// logged in
 			redirect('login');
 		}
     $data['name'] = empty($this->session->userdata('name')) ? $this->session->userdata('username') : $this->session->userdata('name');

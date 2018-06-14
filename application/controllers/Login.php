@@ -68,6 +68,12 @@ class Login extends Front_Controller {
 
 					} else {													// fail
 						foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
+						  if(isset($errors['password']) && !is_null($errors['password']) && !empty($errors['password'])){
+								$this->session->set_flashdata('error', $this->lang->line('auth_incorrect_password'));
+							}
+							if(isset($errors['login']) && !is_null($errors['login']) && !empty($errors['login'])){
+								$this->session->set_flashdata('error', $this->lang->line('auth_incorrect_login'));
+							}
 					}
 				}
 			}

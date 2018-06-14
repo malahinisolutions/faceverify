@@ -16,7 +16,7 @@ class Upload_document extends Front_Controller {
 
   public function index()
   {
-		if (!$this->tank_auth->is_logged_in(FALSE)) {									// logged in
+		if (!$this->tank_auth->is_logged_in()) {									// logged in
 			redirect('login');
 		}
 		$data['document_type']='';

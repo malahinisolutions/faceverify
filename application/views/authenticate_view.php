@@ -76,8 +76,10 @@
                     <div class="form-group">
                         <div class="pull-right">
                           <form action="<?php echo base_url('authenticate');?>" id="capture_image_validation"  method="post">
-                            <INPUT TYPE="button" VALUE="Back" class="previous-b"  onClick="history.go(-1)" >
-                            <button class="btn btn-primary btn-lg btn-block pb_btn-pill  btn-shadow-blue"   type="submit">Continue &raquo;</button>
+                            <div style="clear:both; float: right;">
+                                <INPUT TYPE="button" VALUE="Back" class="previous-b btn btn-lg pb_btn-pill  btn-shadow-blue"  onClick="history.go(-1)"  style="width:150px; float: left;">
+                                <button style="width:150px; float: left;" class="btn btn-primary btn-lg btn-block pb_btn-pill  btn-shadow-blue"   type="submit">Submit</button>
+                            </div>
                           </form>
                         </div>
                     </div>

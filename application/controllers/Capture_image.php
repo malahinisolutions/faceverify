@@ -32,7 +32,7 @@ class Capture_image extends Front_Controller {
 		$this->form_validation->set_rules('user_image', 'User Image', 'trim|xss_clean');
 		if ($this->form_validation->run()) {
 			$user_image=$this->form_validation->set_value('user_image');
-			if($user_image!='0')
+			if($user_image!='0'&& $data['user_image'] !='0')
 			{
 				$this->session->set_flashdata('message', $this->lang->line('auth_message_user_image'));
 				redirect('complete_verification');
@@ -51,8 +51,10 @@ class Capture_image extends Front_Controller {
 		$url = '';
 		if(!is_null($datas=$this->users->get_user_verifications_by_ids($this->session->userdata('user_id'))))
 		{
-			if(file_exists(FCPATH."/upload/user/".$datas->user_image)){
-			 unlink(FCPATH."/upload/user/".$datas->user_image);
+			if(file_exists(FCPATH."upload/user/".$datas->user_image)){
+				if(isset($datas->user_image)){
+					unlink(FCPATH."upload/user/".$datas->user_image);
+				}
 		 }
 		}
 		if( move_uploaded_file($_FILES['webcam']['tmp_name'],'upload/user/'.$filename) ){

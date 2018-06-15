@@ -82,7 +82,7 @@
                         <div class="pull-right">
                           <form action="<?php echo base_url('capture_image');?>" id="capture_image_validation"  method="post">
                                 <div style="clear:both; float: right;">
-                                  <input type="hidden" name="user_image" value="<?php if($user_image!='0'){echo $user_image;}else{echo '0';}?>">
+                                  <input type="hidden" id="user_image" name="user_image" value="<?php if($user_image!='0'){echo $user_image;}else{echo '0';}?>">
                                     <INPUT TYPE="button" VALUE="Back" class="previous-b btn btn-lg pb_btn-pill  btn-shadow-blue"  onClick="history.go(-1)"  style="width:150px; float: left;">
                                     <button style="width:150px; float: left;" class="btn btn-primary btn-lg btn-block pb_btn-pill  btn-shadow-blue"   type="submit">Continue &raquo;</button>
                                 </div>
@@ -134,8 +134,8 @@ function saveSnap(){
  var base64image = document.getElementById("imageprev").src;
 
  Webcam.upload( base64image, base_url+'capture_image/upload', function(code, text) {
-  if(code=='200'){$('#savesnapshot').hide(); }
-  console.log(code);
+  if(code=='200'){$('#savesnapshot').hide(); $('#user_image').val(text); }
+  console.log(text);
  });
 
 }

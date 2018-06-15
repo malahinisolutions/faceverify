@@ -35,14 +35,21 @@ class Personal_information extends Front_Controller {
 		 {
 			 $data['first_name']=$profile_data->first_name;
 			 $data['last_name']=$profile_data->last_name;
-			 $birth_date=$profile_data->birth_date;
-			 $date = explode('/', $birth_date);
-			 $day = $date[0];
-			 $month   = $date[1];
-			 $year  = $date[2];
-	 		$data['day']=$day;
-	 		$data['month']=$month;
-	 		$data['year']=$year;
+			 if($profile_data->birth_date){
+				 $birth_date=$profile_data->birth_date;
+  			 $date = explode('/', $birth_date);
+  			 $day = $date[0];
+  			 $month   = $date[1];
+  			 $year  = $date[2];
+				 $data['day']=$day;
+	 	 		$data['month']=$month;
+	 	 		$data['year']=$year;
+			}else{
+				$data['day']='';
+		 		$data['month']='';
+		 		$data['year']='';
+			}
+
 	 		$data['country']=$profile_data->country;
 	 		$data['state']=$profile_data->state;
 	 		$data['city']=$profile_data->city;

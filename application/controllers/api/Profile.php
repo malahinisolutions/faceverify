@@ -35,9 +35,14 @@ class Profile extends Api_Controller
         $profiledetails='';
         $data['errors'] = array();
         if ($this->form_validation->run()) {
-            if ($profiledetails=$this->tank_auth->profile_details(
-                        $this->form_validation->set_value('user_id'))) {        // success
-                    $this->set_response(array('profiledetails'=>$profiledetails), REST_Controller::HTTP_OK);
+            if ($profiledetails=$this->tank_auth->profile_details($this->form_validation->set_value('user_id'))) {        // success
+              if(is_null($datas = $this->users->can_user_verifided($user_id)))
+  						{
+  							$status=array('verification_status'=>'pending');
+  						}else{
+  							$status=array('verification_status'=>$datas->status);
+  						}
+              $this->set_response(array('profiledetails'=>array_merge((array)$profiledetails,$status)), REST_Controller::HTTP_OK);
             } else {                                                        // fail
                     $this->set_response(array('error' => $this->tank_auth->get_error_message()), REST_Controller::HTTP_NOT_FOUND);
             }
@@ -148,8 +153,14 @@ class Profile extends Api_Controller
                         $this->set_response(array('error' => $this->tank_auth->get_error_message()), REST_Controller::HTTP_NOT_FOUND);
                     }
                 }
+                if(is_null($datas = $this->users->can_user_verifided($user_id)))
+    						{
+    							$status=array('verification_status'=>'pending');
+    						}else{
+    							$status=array('verification_status'=>$datas->status);
+    						}
                 $profiledetails=$this->tank_auth->profile_details($this->form_validation->set_value('user_id'));
-                $this->set_response(array('message'=>$this->lang->line('auth_message_profile_updated'),'profiledetails'=>$profiledetails ), REST_Controller::HTTP_OK);
+                $this->set_response(array('message'=>$this->lang->line('auth_message_profile_updated'),'profiledetails'=>array_merge((array)$profiledetails,$status)), REST_Controller::HTTP_OK);
             } else {
                 $this->set_response(array('error' => $this->tank_auth->get_error_message()), REST_Controller::HTTP_NOT_FOUND);
             }
@@ -191,19 +202,91 @@ class Profile extends Api_Controller
               chmod(FCPATH."upload/document/".$filename,0777);
           }
           $save['document_path'] = $filename;
+          if(is_null($datas = $this->users->can_user_verifided($user_id)))
+          {
+            $status=array('verification_status'=>'pending');
+          }else{
+            $status=array('verification_status'=>$datas->status);
+          }
           if(!is_null($profile_data1=$this->users->get_user_verifications_by_ids($save['user_id'])))
           {
             $this->users->upload_document($save['user_id'],$save);
             $profiledetails=$this->users->get_user_verifications_by_ids($this->form_validation->set_value('user_id'));
-            $this->set_response(array('message'=>$this->lang->line('auth_message_document_updated'),'profiledetails'=>$profiledetails ), REST_Controller::HTTP_OK);
+            $this->set_response(array('message'=>$this->lang->line('auth_message_document_updated'),'profiledetails'=>array_combine((array)$profiledetails,$status)), REST_Controller::HTTP_OK);
           }else{
             $this->users->insert_document($save['user_id'],$save);
             $profiledetails=$this->users->get_user_verifications_by_ids($this->form_validation->set_value('user_id'));
-            $this->set_response(array('message'=>$this->lang->line('auth_message_document_inserted'),'profiledetails'=>$profiledetails ), REST_Controller::HTTP_OK);
+            $this->set_response(array('message'=>$this->lang->line('auth_message_document_inserted'),'profiledetails'=>array_merge((array)$profiledetails,$status)), REST_Controller::HTTP_OK);
           }
         } else {
             $this->set_response(array('error' => $this->form_validation->error_array()), REST_Controller::HTTP_NOT_FOUND);
         }
+    }
+
+    public function upload_image_post()
+    {
+      if (count($this->post()) > 2 || count($this->post()) != '2') {
+          $this->response(array('error'=>'The invalid fields provided.'), REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+      }
+      $user_id=$this->post('user_id');
+      $user_image=$this->post('user_image');
+      if (!isset($user_id) && empty($user_id)) {
+          $this->response(array('error'=>array('user_id'=>'The User ID field is required.')), REST_Controller::HTTP_BAD_REQUEST);
+      }
+      if (!isset($user_image) && empty($user_image)) {
+          $this->response(array('error'=>array('user_image'=>'The User Image field is required.')), REST_Controller::HTTP_BAD_REQUEST);
+      }
+      $this->form_validation->set_data($this->post());
+      $this->form_validation->set_rules('user_id', 'User ID', 'trim|required|xss_clean|is_natural_no_zero');
+      $this->form_validation->set_rules('user_image', 'User Image', 'trim|required|xss_clean');
+      if ($this->form_validation->run())
+      {
+        $save['user_id'] =  $this->form_validation->set_value('user_id');
+        if (!empty($this->post('user_image'))) {
+            $filename = 'reg_'.$user_id.".png";
+            file_put_contents(FCPATH."upload/user/".$filename, base64_decode($this->post('user_image')));
+            chmod(FCPATH."upload/user/".$filename,0777);
+        }
+        $save['user_image']=$filename;
+        $this->users->update_user_verifications($save['user_id'],$save);
+        if(is_null($datas = $this->users->can_user_verifided($user_id)))
+        {
+          $status=array('verification_status'=>'pending');
+        }else{
+          $status=array('verification_status'=>$datas->status);
+        }
+        $profiledetails=$this->users->get_user_verifications_by_ids($this->form_validation->set_value('user_id'));
+        $this->set_response(array('message'=>$this->lang->line('auth_message_user_image'),'profiledetails'=>array_merge((array)$profiledetails,$status)), REST_Controller::HTTP_OK);
+
+      }else {
+          $this->set_response(array('error' => $this->form_validation->error_array()), REST_Controller::HTTP_NOT_FOUND);
+      }
+    }
+
+    public function user_verification_status_post()
+    {
+      if (count($this->post()) > 1 || count($this->post()) != '1') {
+          $this->response(array('error'=>'The invalid fields provided.'), REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+      }
+      $user_id=$this->post('user_id');
+      if (!isset($user_id) && empty($user_id)) {
+          $this->response(array('error'=>array('user_id'=>'The User ID field is required.')), REST_Controller::HTTP_BAD_REQUEST);
+      }
+      $this->form_validation->set_data($this->post());
+      $this->form_validation->set_rules('user_id', 'User ID', 'trim|required|xss_clean|is_natural_no_zero');
+      if ($this->form_validation->run())
+      {
+        if(is_null($datas = $this->users->can_user_verifided($loginuser->id)))
+        {
+          $status='pending';
+        }else{
+          $status=$datas->status;
+        }
+        $this->set_response(array('message'=>'user verification status','verification_status'=>$status ), REST_Controller::HTTP_OK);
+
+      }else{
+          $this->set_response(array('error' => $this->form_validation->error_array()), REST_Controller::HTTP_NOT_FOUND);
+      }
     }
 }
 /* End of file Profile.php */

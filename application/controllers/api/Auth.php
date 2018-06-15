@@ -73,9 +73,15 @@ class Auth extends Api_Controller
 					$authorization='Basic '.base64_encode($this->form_validation->set_value('login').':'.$this->form_validation->set_value('password'));
 					if(!is_null($key=$this->generate_key($loginuser->id)))
 					{
-						$this->set_response(array('loginuserdetails'=>$loginuser,'authentication'=>$key,'authorization'=>$authorization), REST_Controller::HTTP_OK);
+						if(is_null($datas = $this->users->can_user_verifided($loginuser->id)))
+						{
+							$status=array('verification_status'=>'pending');
+						}else{
+							$status=array('verification_status'=>$datas->status);
+						}
+						$this->set_response(array('loginuserdetails'=>array_merge((array)$loginuser,$status),'authentication'=>$key,'authorization'=>$authorization), REST_Controller::HTTP_OK);
 					}else{
-						$this->set_response(array('loginuserdetails'=>$loginuser,'keyerror'=>'Could not save the key','authorization'=>$authorization), REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+						$this->set_response(array('loginuserdetails'=>array_merge((array)$loginuser,$status),'keyerror'=>'Could not save the key','authorization'=>$authorization), REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
 					}
 
 				} else {
@@ -124,7 +130,7 @@ class Auth extends Api_Controller
 	 * @return void
 	 */
 	public function register_post()
-	{ 
+	{
 		if(count($this->post()) > 4 || count($this->post()) != '4')
 		{
 			$this->response(array('error'=>'The invalid fields provided.'), REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code

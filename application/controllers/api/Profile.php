@@ -157,6 +157,54 @@ class Profile extends Api_Controller
             $this->set_response(array('error' => $this->form_validation->error_array()), REST_Controller::HTTP_NOT_FOUND);
         }
     }
+
+
+
+    public function upload_documents_post()
+    {
+      if (count($this->post()) > 3 || count($this->post()) != '3') {
+          $this->response(array('error'=>'The invalid fields provided.'), REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
+      }
+      $user_id=$this->post('user_id');
+      $document_type=$this->post('document_type');
+      $document_image=$this->post('document_image');
+      if (!isset($user_id) && empty($user_id)) {
+          $this->response(array('error'=>array('user_id'=>'The User ID field is required.')), REST_Controller::HTTP_BAD_REQUEST);
+      }
+      if (!isset($document_type) && empty($document_type)) {
+          $this->response(array('error'=>array('document_type'=>'The Document Type field is required.')), REST_Controller::HTTP_BAD_REQUEST);
+      }
+      if (!isset($document_image) && empty($document_image)) {
+          $this->response(array('error'=>array('document_image'=>'The Document Image field is required.')), REST_Controller::HTTP_BAD_REQUEST);
+      }
+
+      $this->form_validation->set_data($this->post());
+      $this->form_validation->set_rules('user_id', 'User ID', 'trim|required|xss_clean|is_natural_no_zero');
+      $this->form_validation->set_rules('document_type', 'Document Type', 'trim|required|xss_clean');
+      $this->form_validation->set_rules('document_image', 'Document Image', 'trim');
+      if ($this->form_validation->run()) {
+          $save['user_id'] =  $this->form_validation->set_value('user_id');
+          $save['document_type'] =  $this->form_validation->set_value('document_type');
+          if (!empty($this->post('document_image'))) {
+              $filename = $user_id.".png";
+              file_put_contents(FCPATH."upload/document/".$filename, base64_decode($this->post('document_image')));
+              chmod(FCPATH."upload/document/".$filename,0777);
+          }
+          $save['document_path'] = $filename;
+          if(!is_null($profile_data1=$this->users->get_user_verifications_by_ids($save['user_id'])))
+          {
+            $this->users->upload_document($save['user_id'],$save);
+            $profiledetails=$this->users->get_user_verifications_by_ids($this->form_validation->set_value('user_id'));
+            $this->set_response(array('message'=>$this->lang->line('auth_message_document_updated'),'profiledetails'=>$profiledetails ), REST_Controller::HTTP_OK);
+          }else{
+            $this->users->insert_document($save['user_id'],$save);
+            $profiledetails=$this->users->get_user_verifications_by_ids($this->form_validation->set_value('user_id'));
+            $this->set_response(array('message'=>$this->lang->line('auth_message_document_inserted'),'profiledetails'=>$profiledetails ), REST_Controller::HTTP_OK);
+          }
+        } else {
+            $this->set_response(array('error' => $this->form_validation->error_array()), REST_Controller::HTTP_NOT_FOUND);
+        }
+    }
 }
 /* End of file Profile.php */
 /* Location: ./application/controllers/Profile.php */

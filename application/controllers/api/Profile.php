@@ -212,7 +212,7 @@ class Profile extends Api_Controller
           {
             $this->users->upload_document($save['user_id'],$save);
             $profiledetails=$this->users->get_user_verifications_by_ids($this->form_validation->set_value('user_id'));
-            $this->set_response(array('message'=>$this->lang->line('auth_message_document_updated'),'profiledetails'=>array_combine((array)$profiledetails,$status)), REST_Controller::HTTP_OK);
+            $this->set_response(array('message'=>$this->lang->line('auth_message_document_updated'),'profiledetails'=>array_merge((array)$profiledetails,$status)), REST_Controller::HTTP_OK);
           }else{
             $this->users->insert_document($save['user_id'],$save);
             $profiledetails=$this->users->get_user_verifications_by_ids($this->form_validation->set_value('user_id'));

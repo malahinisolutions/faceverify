@@ -38,7 +38,7 @@ class Profile extends Api_Controller
             if ($profiledetails=$this->tank_auth->profile_details($this->form_validation->set_value('user_id'))) {        // success
               if(is_null($datas = $this->users->can_user_verifided($user_id)))
   						{
-  							$status=array('verification_status'=>'pending');
+  							$status=array('verification_status'=>'none');
   						}else{
   							$status=array('verification_status'=>$datas->status);
   						}
@@ -155,7 +155,7 @@ class Profile extends Api_Controller
                 }
                 if(is_null($datas = $this->users->can_user_verifided($user_id)))
     						{
-    							$status=array('verification_status'=>'pending');
+    							$status=array('verification_status'=>'none');
     						}else{
     							$status=array('verification_status'=>$datas->status);
     						}
@@ -204,7 +204,7 @@ class Profile extends Api_Controller
           $save['document_path'] = $filename;
           if(is_null($datas = $this->users->can_user_verifided($user_id)))
           {
-            $status=array('verification_status'=>'pending');
+            $status=array('verification_status'=>'none');
           }else{
             $status=array('verification_status'=>$datas->status);
           }
@@ -251,7 +251,7 @@ class Profile extends Api_Controller
         $this->users->update_user_verifications($save['user_id'],$save);
         if(is_null($datas = $this->users->can_user_verifided($user_id)))
         {
-          $status=array('verification_status'=>'pending');
+          $status=array('verification_status'=>'none');
         }else{
           $status=array('verification_status'=>$datas->status);
         }
@@ -278,7 +278,7 @@ class Profile extends Api_Controller
       {
         if(is_null($datas = $this->users->can_user_verifided($loginuser->id)))
         {
-          $status='pending';
+          $status='none';
         }else{
           $status=$datas->status;
         }

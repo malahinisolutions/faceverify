@@ -75,7 +75,7 @@ class Auth extends Api_Controller
 					{
 						if(is_null($datas = $this->users->can_user_verifided($loginuser->id)))
 						{
-							$status=array('verification_status'=>'pending');
+							$status=array('verification_status'=>'none');
 						}else{
 							$status=array('verification_status'=>$datas->status);
 						}

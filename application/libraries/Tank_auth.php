@@ -822,7 +822,7 @@ class Tank_auth
 								'user_id'	=> $user->id,
 								'username'	=> $user->name,
 								'email'	=> $user->email,
-								'status'	=> ($user->activated == 1) ? STATUS_ACTIVATED : STATUS_NOT_ACTIVATED,));
+								'status'	=> STATUS_ACTIVATED,));
 
 							$this->ci->users->admin_update_login_info(
 									$user->id,
@@ -839,6 +839,15 @@ class Tank_auth
 			}
 		}
 		return FALSE;
+	}
+
+	function is_admin_login()
+	{
+		if (!is_null($user = $this->ci->users->get_adminuser_by_email($this->ci->session->userdata('email')))) {
+			return TRUE;
+		}else{
+			return FALSE;
+		}
 	}
 
 }

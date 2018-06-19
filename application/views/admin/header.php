@@ -8,22 +8,50 @@
    <meta name="description" content="Biometric Authentication System">
    <meta name="keywords" content="Biometric Authentication System">
 
-    <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600|Montserrat:200,300,400" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i,900" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Vidaloka" rel="stylesheet">
+
+    <link rel="stylesheet" href="<?php echo base_url('assets/admin/css/vendor.css');?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/admin/css/app.css');?>">
 
 
-    <link rel="stylesheet" href="<?php echo base_url('assets/fonts/ionicons/css/ionicons.min.css');?>">
-    <link rel="stylesheet" href="<?php echo base_url('assets/fonts/fontawesome/css/font-awesome.min.css');?>">
-    <link rel="stylesheet" href="<?php echo base_url('assets/css/slick.css');?>">
-    <link rel="stylesheet" href="<?php echo base_url('assets/css/slick-theme.css');?>">
-    <link rel="stylesheet" href="<?php echo base_url('assets/css/helpers.css');?>">
-    <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css');?>">
-    <link rel="stylesheet" href="<?php echo base_url('assets/css/landing-2.css');?>">
-    <link href="<?php echo base_url('assets/css/bootstrap.min.css');?>" rel="stylesheet" />
-   <link href="<?php echo base_url('assets/css/bvalidator.css');?>" rel="stylesheet" />
-   <link href="<?php echo base_url('assets/css/circle-animation.css');?>" rel="stylesheet" />
 
 <input type="hidden" id="base" value="<?php echo base_url(); ?>">
  </head>
- <body data-spy="scroll" data-target="#pb-navbar" data-offset="200">
+ <body>
+   <div class="main-wrapper">
+       <div class="app" id="app">
+<?php if ($this->tank_auth->is_admin_login()) {?>
+               <header class="header">
+
+                       <div class="header-block header-block-collapse hidden-lg-up">
+                           <button class="collapse-btn" id="sidebar-collapse-btn">
+                               <i class="fa fa-bars"></i>
+                           </button>
+                       </div>
+
+
+                       <div class="header-block header-block-nav">
+                           <ul class="nav-profile pull-right">
+
+                               <li class="profile dropdown">
+                                   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <span class="name">
+                                           John Doe
+                                       </span>
+                                   </a>
+                                   <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
+                                       <a class="dropdown-item" href="#">
+                                           <i class="fa fa-user icon"></i>
+                                          Reset your password
+                                       </a>
+                                       <div class="dropdown-divider"></div> <a class="dropdown-item" href="login.html">
+                                           <i class="fa fa-power-off icon"></i>
+                                           Logout
+                                       </a>
+                                   </div>
+                               </li>
+                           </ul>
+                       </div>
+
+
+                       </header>
+<?php } ?>

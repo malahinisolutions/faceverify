@@ -14,7 +14,7 @@ class Users extends CI_Model
 {
 	private $table_name			= 'users';			// user accounts
 	private $profile_table_name	= 'user_profiles';	// user profiles
-
+	private $user_verifications_table_name='user_verifications';
 	function __construct()
 	{
 		parent::__construct();
@@ -23,6 +23,7 @@ class Users extends CI_Model
 		$ci->load->helper(array('date'));
 		$this->table_name			= $ci->config->item('db_table_prefix', 'tank_auth').$this->table_name;
 		$this->profile_table_name	= $ci->config->item('db_table_prefix', 'tank_auth').$this->profile_table_name;
+		$this->user_verifications_table_name	= $ci->config->item('db_table_prefix', 'tank_auth').$this->user_verifications_table_name;
 	}
 
 	/**
@@ -535,9 +536,27 @@ class Users extends CI_Model
 		return true;
 	}
 
+	public function api_insert_document($user_id,$data)
+	{
+		$data['created_at']=date('Y-m-d H:i:s');
+		$data['status']='none';
+		$data['user_id']=$user_id;
+		$this->db->insert('user_verifications', $data);
+		return true;
+	}
+
+	public function api_upload_document($user_id,$data)
+	{
+		$data['updated_at']=date('Y-m-d H:i:s');
+		$data['status']='none';
+		$this->db->where('user_id', $user_id);
+		$this->db->update('user_verifications', $data);
+		return true;
+	}
+
 	function can_user_verifided($user_id)
 	{
-		 
+
 		$this->db->where('user_id', $user_id);
 		$query = $this->db->get('user_verifications');
 		if($query->num_rows() == 1) return $query->row();
@@ -591,6 +610,34 @@ class Users extends CI_Model
 		$this->db->where('id', $user_id);
 		$this->db->update('adminuser');
 	}
+
+	function count_all_users()
+		{
+			$this->db->join($this->table_name, $this->table_name.'.id='.$this->profile_table_name.'.user_id' );
+			$result = $this->db->count_all_results($this->profile_table_name);
+			return $result;
+		}
+
+		function get_all_users_details($order_by='first_name', $direction='DESC',$limit=0, $offset=0,$search=false)
+		{
+			$this->db->order_by($order_by, $direction);
+			if($limit>0)
+			{
+				$this->db->limit($limit, $offset);
+			}
+			if($search)
+			{
+				$this->db->like('user_profiles.first_name', $search);
+				$this->db->or_like('user_profiles.last_name', $search);
+				$this->db->or_like('users.email', $search);
+				//$this->db->or_like('users.username', $search);
+			}
+			$this->db->join($this->table_name, $this->table_name.'.id='.$this->profile_table_name.'.user_id' );
+			$this->db->join($this->user_verifications_table_name, $this->user_verifications_table_name.'.user_id='.$this->profile_table_name.'.user_id' );
+
+			$query = $this->db->get($this->profile_table_name);
+			return $query->result();
+		}
 
 
 

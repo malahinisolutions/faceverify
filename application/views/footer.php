@@ -3,7 +3,7 @@
 
     <div class="row">
       <div class="col text-center">
-        <p class="pb_font-14">&copy; 2018 <a href="#">BIOMETRIC AUTHENTICATION SYSTEM</a> <br> Designed &amp; Developed by <a href="#">Malahini Solutions</a> </p>
+        <p class="pb_font-14">&copy; 2018 <a href="#">BIOMETRIC AUTHENTICATION SYSTEM</a> <br> Designed &amp; Developed by <a href="http://codeinfrastructure.com/">Code Infrastructure</a> </p>
 
       </div>
     </div>

@@ -16,6 +16,9 @@ class Login extends Admin_Controller {
 
   public function index()
   {
+		if ($this->tank_auth->is_admin_login()) {
+			redirect('userverification');
+		}
     $this->form_validation->set_rules('login', 'Email', 'trim|required|xss_clean');
     $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
     if ($this->form_validation->run()) {								// validation ok
@@ -26,6 +29,12 @@ class Login extends Admin_Controller {
       }else{
         $errors = $this->tank_auth->get_error_message();
          foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
+				 if(isset($errors['password']) && !is_null($errors['password']) && !empty($errors['password'])){
+					 $this->session->set_flashdata('error', $this->lang->line('auth_incorrect_password'));
+				 }
+				 if(isset($errors['login']) && !is_null($errors['login']) && !empty($errors['login'])){
+					 $this->session->set_flashdata('error', $this->lang->line('auth_incorrect_login'));
+				 }
       }
     }
     $data['page_title']='Login';
@@ -37,6 +46,6 @@ class Login extends Admin_Controller {
   {
     $this->tank_auth->logout();
     $this->session->set_flashdata('message', $this->lang->line('auth_message_logged_out'));
-     redirect('login');
+     redirect('admin/login');
   }
 }

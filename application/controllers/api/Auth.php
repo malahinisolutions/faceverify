@@ -188,7 +188,7 @@ class Auth extends Api_Controller
 					if ($email_activation) {									// send "activate" email
 						$data['activation_period'] = $this->config->item('email_activation_expire', 'tank_auth') / 3600;
 
-						$this->tank_auth->send_email('activate', $data['email'], $data);
+						//$this->tank_auth->send_email('activate', $data['email'], $data);
 
 						unset($data['password']); // Clear password (just for any case)
 
@@ -197,7 +197,7 @@ class Auth extends Api_Controller
 					} else {
 						if ($this->config->item('email_account_details', 'tank_auth')) {	// send "welcome" email
 
-							$this->tank_auth->send_email('welcome', $data['email'], $data);
+							//$this->tank_auth->send_email('welcome', $data['email'], $data);
 						}
 						unset($data['password']); // Clear password (just for any case)
 

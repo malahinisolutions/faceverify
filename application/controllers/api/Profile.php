@@ -276,7 +276,7 @@ class Profile extends Api_Controller
       $this->form_validation->set_rules('user_id', 'User ID', 'trim|required|xss_clean|is_natural_no_zero');
       if ($this->form_validation->run())
       {
-        if(is_null($datas = $this->users->can_user_verifided($loginuser->id)))
+        if(is_null($datas = $this->users->can_user_verifided($user_id)))
         {
           $status='none';
         }else{

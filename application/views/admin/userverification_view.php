@@ -72,7 +72,7 @@
                                                     <td><?php echo $admin->first_name;?></td>
                                         						<td><?php echo $admin->last_name;?></td>
                                                     <td><?php echo $admin->email;?></td>
-                                                    <td><?php echo $admin->status;?></td>
+                                                    <td><?php if($admin->status){echo $admin->status;}else{ echo 'None';}?></td>
                                                     <td><?php echo $admin->country;?></td>
                                                     <td><a href="<?php echo base_url('admin/userverification/edit/').$admin->user_id;?>" title="More Details"> <i class="fa fa-info-circle" aria-hidden="true"></i> </a></td>
                                                     </tr>

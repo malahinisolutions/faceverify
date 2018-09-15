@@ -52,8 +52,32 @@ class Authenticate extends Front_Controller {
 		if( move_uploaded_file($_FILES['webcam']['tmp_name'],'upload/check_user/'.$filename) ){
 				$newimage=base_url('upload/check_user/').$filename;
 		}
-		//print_r(array('oldimage'=>$oldimage,'newimage'=>$newimage));die;
-    print_r(base64_encode(file_get_contents($oldimage)));die;
+		$base64_oldimage=base64_encode(file_get_contents($oldimage));
+		$base64_newimage=base64_encode(file_get_contents($newimage));
+		$data=json_encode(array('photo_one'=>$base64_oldimage,'photo_two'=>$base64_newimage,'type'=>'face'));
+		$headers = array('Content-Type: application/json',); 
+		$url = 'http://18.217.212.166/api/v1/compare'; 
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_POST, '3');
+		curl_setopt($ch,CURLOPT_POSTFIELDS, $data);
+
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		$result = curl_exec($ch);
+		curl_close($ch);
+		$something = (array)json_decode($result);
+		if(isset($something['error']) && !empty($something['error'])){
+		print_r($something['error']);die;	
+		}else{
+			if($something['score']>='2'){
+				 print_r('auth_success');die;
+			}
+			print_r('Please retake snapshot.');die;
+		}
+    
 	}
 
 }

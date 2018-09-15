@@ -32,22 +32,20 @@
                        <div class="header-block header-block-nav">
                            <ul class="nav-profile pull-right">
 
-                               <li class="profile dropdown">
-                                   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                               <li class="profile">
+                                   <a class="nav-link"  href="#"  >
                                         <span class="name">
-                                           John Doe
+                                           <?php echo $this->session->userdata('username');?>
                                        </span>
                                    </a>
-                                   <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
-                                       <a class="dropdown-item" href="#">
-                                           <i class="fa fa-user icon"></i>
-                                          Reset your password
-                                       </a>
-                                       <div class="dropdown-divider"></div> <a class="dropdown-item" href="login.html">
+                                   
+                               </li>
+							    <li class="profile">
+                                   <a class="nav-link"   href="<?= base_url('admin/login/logout')?>">
                                            <i class="fa fa-power-off icon"></i>
                                            Logout
-                                       </a>
-                                   </div>
+                                   </a> 
+                                       
                                </li>
                            </ul>
                        </div>

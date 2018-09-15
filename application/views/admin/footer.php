@@ -2,13 +2,13 @@
 
         <div class="footer-block author">
             <ul>
-                <li> created by <a href="http://codeinfrastructure.com/">Code Infrastructure</a> </li>
+                <li> Designed & Developed by <a href="http://codeinfrastructure.com/" target="_blank" >Code Infrastructure</a> </li>
 
             </ul>
         </div>
 
 </footer>
-
+ 
 </div>
 </div>
 

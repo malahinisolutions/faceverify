@@ -11883,7 +11883,7 @@ tbody.collapse.in {
   border-color: #ddd;
 }
 
-.page-link {
+.page-link,.pagination .page-item a {
   position: relative;
   float: left;
   padding: 0.5rem 0.75rem;
@@ -11894,7 +11894,8 @@ tbody.collapse.in {
   border: 1px solid #ddd;
 }
 
-.page-link:focus, .page-link:hover {
+.page-link:focus, .page-link:hover ,
+.pagination .page-item a:focus,.pagination .page-item a:hover{
   color: #014c8c;
   background-color: #eceeef;
   border-color: #ddd;

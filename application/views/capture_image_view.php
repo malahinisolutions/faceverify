@@ -84,7 +84,7 @@
                                 <div style="clear:both; float: right;">
                                   <input type="hidden" id="user_image" name="user_image" value="<?php if($user_image!='0'){echo $user_image;}else{echo '0';}?>">
                                     <INPUT TYPE="button" VALUE="Back" class="previous-b btn btn-lg pb_btn-pill  btn-shadow-blue"  onClick="history.go(-1)"  style="width:150px; float: left;">
-                                    <button style="width:150px; float: left;" class="btn btn-primary btn-lg btn-block pb_btn-pill  btn-shadow-blue"   type="submit">Continue &raquo;</button>
+                                    <button id="submitbtn" style="width:150px; float: left; display:none;" class="btn btn-primary btn-lg btn-block pb_btn-pill  btn-shadow-blue"   type="submit">Continue &raquo;</button>
                                 </div>
                           </form>
                         </div>
@@ -112,6 +112,7 @@
 <script src="<?php echo base_url('assets/webcamjs-master/webcam.js');?>"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	if($('#user_image').val()!=0){$('#submitbtn').show();}
   Webcam.set({
     width: 266,
     height: 200,
@@ -126,7 +127,7 @@ function take_snapshot() {
   Webcam.snap( function(data_uri) {
     // display results in page
     document.getElementById('results').innerHTML =
-      '<img id="imageprev" src="'+data_uri+'"/>'+' <input id="savesnapshot" type=button class="sav-snapshot-b" value="Save Snapshot" onClick="saveSnap()">';
+      '<img id="imageprev" src="'+data_uri+'"/><span id="imageprev1"></span>'+' <input id="savesnapshot" type=button class="sav-snapshot-b" value="Save Snapshot" onClick="saveSnap()">';
   } );
 }
 function saveSnap(){
@@ -134,7 +135,10 @@ function saveSnap(){
  var base64image = document.getElementById("imageprev").src;
 
  Webcam.upload( base64image, base_url+'capture_image/upload', function(code, text) {
-  if(code=='200'){$('#savesnapshot').hide(); $('#user_image').val(text); }
+  if(code=='200'){$('#savesnapshot').hide(); $('#user_image').val(text); $('#submitbtn').show();
+  $('#imageprev1').html('<p>Your Submitted Image</p>');
+   
+   }
   console.log(text);
  });
 

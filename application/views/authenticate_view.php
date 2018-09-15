@@ -78,7 +78,7 @@
                           <form action="<?php echo base_url('authenticate');?>" id="capture_image_validation"  method="post">
                             <div style="clear:both; float: right;">
                                 <INPUT TYPE="button" VALUE="Back" class="previous-b btn btn-lg pb_btn-pill  btn-shadow-blue"  onClick="history.go(-1)"  style="width:150px; float: left;">
-                                <button style="width:150px; float: left;" class="btn btn-primary btn-lg btn-block pb_btn-pill  btn-shadow-blue"   type="submit">Submit</button>
+                                <button id="submitbtn" style="width:150px; float: left; display:none;" class="btn btn-primary btn-lg btn-block pb_btn-pill  btn-shadow-blue"   type="submit">Submit</button>
                             </div>
                           </form>
                         </div>
@@ -120,16 +120,24 @@ function take_snapshot() {
   Webcam.snap( function(data_uri) {
     // display results in page
     document.getElementById('results').innerHTML =
-      '<img id="imageprev" src="'+data_uri+'"/>'+' <input id="savesnapshot" type=button class="sav-snapshot-b" value="Authenticate Yourself" onClick="saveSnap()">';
+      '<img id="imageprev" src="'+data_uri+'"/>'+' <input id="savesnapshot" type=button class="sav-snapshot-b" value="Authenticate Yourself" onClick="saveSnap()">'+'<span id="ajax_loader"></span>';
   } );
 }
 function saveSnap(){
    var base_url = $('#base').val();
  var base64image = document.getElementById("imageprev").src;
-
+document.getElementById('ajax_loader').innerHTML='<img src="'+base_url+'assets/images/ajax-loader.gif"/> Please wait...';
+$('#savesnapshot').hide();
  Webcam.upload( base64image, base_url+'authenticate/upload', function(code, text) {
-  if(code=='200'){$('#savesnapshot').hide(); }
-  console.log(code);
+  if(code=='200'){
+	  $('#submitbtn').show();
+	  if(text=='auth_success'){
+		  window.location = base_url+"auth_success";
+	  }else{
+		  $('#ajax_loader').html(text).css('color', 'red');
+	  }
+	  }
+  console.log(text);
  });
 
 }

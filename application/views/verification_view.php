@@ -30,10 +30,11 @@
           <!--  <button type="button"  class="verifynow-button" data-toggle="modal" data-target="#myModal"><span>Verify Now </span></button>-->
 
             <p style="margin-top:10px;">  If your identity is not successfully verified within 14 days, your account will be deactivated.  </p>
-         <p> <a href="verification-user-capture-image.html"> Days remaining: 5 </a></p>
+          
          <h2>Verification Status: <?php echo $status;?></h2>
-         <a href="<?php echo base_url('authenticate');?>" title="Authenticate Yourself">Authenticate Yourself</a>
-
+		 <?php if($status=='processed'){ ?>
+         <a class="btn btn-success" href="<?php echo base_url('authenticate');?>" title="Authenticate Yourself">Authenticate Yourself</a>
+		 <?php } ?>
         </div>
       </div>
 

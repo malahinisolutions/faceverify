@@ -1,0 +1,84 @@
+<div class="navbar topnav">
+   <div class="navbar-inner">
+       <div class="container">
+           <div class="nav-collapse ">
+               <div class="col-md-4 col-sm-4 pull-right">
+                   <div class="dropdown pull-right">
+           <button onclick="myFunction()" class="dropbtn dropdown-toggle">  <?php if($name){ echo $name;}else{ echo $this->session->userdata('username');}?></button>
+             <div id="myDropdown" class="dropdown-content">
+                <a   href="<?php echo  base_url('login/logout');?>">Log Out</a>
+             </div>
+           </div>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+<section class="pb_cover_v3 cover-bg-indigo cover-bg-opacity text-left pb_gradient_v1 pb_slant-light" id="section-home">
+  <div class="container">
+    <div class="row">
+        <div class="col-md-5 verification-id page-p">
+
+            <div class="feature-description">
+                <h2>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.
+                </h2>
+                <hr>
+                <!-- feature-left -->
+                <div class="feature-left">
+                    <div class="feature-icon"> <span>01</span></div>
+                    <div class="feature-content">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+                    </div>
+                </div>
+                <!-- feature-left -->
+                <div class="feature-left">
+                    <div class="feature-icon"> <span>02</span></div>
+                    <div class="feature-content">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+                    </div>
+                </div>
+                <!-- feature-left -->
+                <div class="feature-left">
+                    <div class="feature-icon bg-active"> <span>03</span></div>
+                    <div class="feature-content">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+                    </div>
+                </div>
+                <!-- feature-left -->
+                <div class="feature-left">
+                    <div class="feature-icon"> <span>04</span></div>
+                    <div class="feature-content">
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p></div>
+                </div>
+                <hr>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-7 col-sm-12">
+            <div class="page-p">
+                <h1 class="mb-3 heading-txt"></h1>
+                <div  class="bg-white rounded pb_form_v1" style="float:left; width:100% !important;">
+                    <h2 class="mb-4 mt-0 text-center">Authenticate Success</h2>
+                    
+                     <div  class="bg-white rounded pb_form_v1" style="float:left; width:100% !important;">
+                   <div class="successful"><i class="fa fa-check" aria-hidden="true"></i>
+                    <p>
+                        <span> Congratulations</span>
+                        <br />
+                        You have been successfully authenticated.
+                    </p>
+                     </div>
+                    <div class="clear"></div>
+ 
+                     
+                </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+  </div>
+</section>

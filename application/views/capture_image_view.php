@@ -134,8 +134,9 @@ function saveSnap(){
    var base_url = $('#base').val();
  var base64image = document.getElementById("imageprev").src;
 document.getElementById('ajax_loader').innerHTML='<img src="'+base_url+'assets/images/ajax-loader.gif"/> Please wait...';
+$('#savesnapshot').hide();
  Webcam.upload( base64image, base_url+'capture_image/upload', function(code, text) {
-  if(code=='200'){$('#savesnapshot').hide(); $('#user_image').val(text); $('#submitbtn').show();
+  if(code=='200'){ $('#user_image').val(text); $('#submitbtn').show();
   $('#ajax_loader').hide();
   $('#imageprev1').html('<p>Your Submitted Image</p>');
    

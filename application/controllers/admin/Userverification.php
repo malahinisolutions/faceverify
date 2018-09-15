@@ -114,6 +114,9 @@ class Userverification extends Admin_Controller {
  					 );
 					 $this->users->update_user_verifications($id,$userData);
    $this->session->set_flashdata('message', 'Information updated successfully');
+   $data['comment']=$this->input->post('comment');
+						$data['verified_by']=$this->session->userdata('email');
+						$data['verification_at']=date('Y-m-d H:i:s');
   }
 	if($this->input->post('cancelled')){
 		$userData = array(
@@ -124,6 +127,9 @@ class Userverification extends Admin_Controller {
 						 );
 						$this->users->update_user_verifications($id,$userData);
 						$this->session->set_flashdata('message', 'Information updated successfully');
+						$data['comment']=$this->input->post('comment');
+						$data['verified_by']=$this->session->userdata('email');
+						$data['verification_at']=date('Y-m-d H:i:s');
 	}
   $this->view('admin/details_view.php',$data);
   }

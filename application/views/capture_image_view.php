@@ -127,15 +127,16 @@ function take_snapshot() {
   Webcam.snap( function(data_uri) {
     // display results in page
     document.getElementById('results').innerHTML =
-      '<img id="imageprev" src="'+data_uri+'"/><span id="imageprev1"></span>'+' <input id="savesnapshot" type=button class="sav-snapshot-b" value="Save Snapshot" onClick="saveSnap()">';
+      '<img id="imageprev" src="'+data_uri+'"/><span id="imageprev1"></span>'+' <input id="savesnapshot" type=button class="sav-snapshot-b" value="Save Snapshot" onClick="saveSnap()"><span id="ajax_loader"></span>';
   } );
 }
 function saveSnap(){
    var base_url = $('#base').val();
  var base64image = document.getElementById("imageprev").src;
-
+document.getElementById('ajax_loader').innerHTML='<img src="'+base_url+'assets/images/ajax-loader.gif"/> Please wait...';
  Webcam.upload( base64image, base_url+'capture_image/upload', function(code, text) {
   if(code=='200'){$('#savesnapshot').hide(); $('#user_image').val(text); $('#submitbtn').show();
+  $('#ajax_loader').hide();
   $('#imageprev1').html('<p>Your Submitted Image</p>');
    
    }

@@ -31,7 +31,7 @@
 
             <p style="margin-top:10px;">  If your identity is not successfully verified within 14 days, your account will be deactivated.  </p>
           
-         <h2>Verification Status: <?php echo $status;?></h2>
+         <h2>Verification Status: <span style="text-transform: uppercase;"><?php echo $status;?></span></h2>
 		 <?php if($status=='processed'){ ?>
          <a class="btn btn-success" href="<?php echo base_url('authenticate');?>" title="Authenticate Yourself">Authenticate Yourself</a>
 		 <?php } ?>

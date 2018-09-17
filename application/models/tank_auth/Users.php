@@ -504,10 +504,26 @@ class Users extends CI_Model
 	 * @param	int
 	 * @return	void
 	 */
-	private function delete_profile($user_id)
+	function delete_profile($user_id)
 	{
 		$this->db->where('user_id', $user_id);
 		$this->db->delete($this->profile_table_name);
+	}
+	
+	function delete_userdata($user_id)
+	{
+		$this->db->where('id', $user_id);
+		$this->db->delete($this->table_name);
+	}
+	function delete_user_verifications($user_id)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->delete($this->user_verifications_table_name);
+	}
+	function delete_comment($user_id)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->delete('comment');
 	}
 
 	function get_user_by_ids($user_id)
@@ -586,6 +602,30 @@ class Users extends CI_Model
 		$this->db->update('user_verifications', $save);
 		return true;
 	}
+	public function insert_user_verifications_comment($save)
+	{
+		$this->db->insert('comment', $save);
+		return true;
+	}
+	public function insert_user_old_comment($save)
+	{
+		$this->db->insert('oldcomment', $save);
+		return true;
+	}
+	 
+	function get_comment_by_id($user_id)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->order_by('created_at', 'ASC');		
+		$query = $this->db->get('comment');
+		return $query->result();
+	}
+	
+	function insert_decline_user_details($data)
+	{
+		$this->db->insert('decline_users', $data);
+		return $this->db->insert_id();
+	}
 
 	/**
 	 * Get admin user record by email
@@ -614,6 +654,7 @@ class Users extends CI_Model
 	function count_all_users()
 		{
 			$this->db->join($this->table_name, $this->table_name.'.id='.$this->profile_table_name.'.user_id' );
+			$this->db->join($this->user_verifications_table_name, $this->user_verifications_table_name.'.user_id='.$this->profile_table_name.'.user_id' );
 			$result = $this->db->count_all_results($this->profile_table_name);
 			return $result;
 		}
@@ -638,6 +679,41 @@ class Users extends CI_Model
 			$query = $this->db->get($this->profile_table_name);
 			return $query->result();
 		}
+	function count_all_declineusers()
+	{
+		$result = $this->db->count_all_results('decline_users');
+		return $result;
+	}
+	function get_all_declineusers($order_by='first_name', $direction='DESC',$limit=0, $offset=0,$search=false)
+	{
+		$this->db->order_by($order_by, $direction);
+			if($limit>0)
+			{
+				$this->db->limit($limit, $offset);
+			}
+			if($search)
+			{
+				$this->db->like('first_name', $search);
+				$this->db->or_like('last_name', $search);
+				$this->db->or_like('email', $search);
+			}
+		$query = $this->db->get('decline_users');
+		return $query->result();
+	}
+	function get_decline_user_profile_details($id)
+	{
+		$this->db->where('id', $id);
+		$query = $this->db->get('decline_users');
+		if ($query->num_rows() == 1) return $query->row();
+		return NULL;
+	}
+	function get_decline_user_comment_by_id($id)
+	{
+		$this->db->where('user_id', $id);
+		$this->db->order_by('created_at', 'ASC');		
+		$query = $this->db->get('oldcomment');
+		return $query->result();
+	}
 
 
 

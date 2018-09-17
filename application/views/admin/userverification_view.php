@@ -39,14 +39,17 @@
                                             <div class="clearfix"><?php include('validation_message.php'); ?></div>
                                         </div>
                                             <div class="col-lg-3">
+											<a class="btn btn-success pull-right" href="<?php echo  base_url('admin/decline_user');?>">Decline User List</a>
+											<form accept-charset="UTF-8" action="<?php echo base_url('admin/userverification');?>" method="POST">
                                                 <div class="input-group custom-search-form">
-                                                    <input type="text" placeholder="Search" class="form-control">
+                                                    <input type="text" name="search" placeholder="Search" class="form-control">
                                                     <span class="input-group-btn">
-                                                        <button class="btn btn-primary" type="button">
+                                                        <button class="btn btn-primary" type="submit">
                                                             <i class="fa fa-search" aria-hidden="true"></i>
                                                         </button>
                                                     </span>
-                                                </div><!-- /input-group -->
+                                                </div>
+												</form>
                                             </div>
                                         </div>
                                     <section class="example">
@@ -65,7 +68,7 @@
                                                 </thead>
                                                 <tbody>
                                                   <?php //echo '<pre>';print_r($alladmins);die();
-                                        						echo (count($alladmins) < 1)?'<tr><td class="center" colspan="7">'."<h3>There is no record of Admins</h3>" .'</td></tr>':'';
+                                        						echo (count($alladmins) < 1)?'<tr><td class="center" colspan="7">'."<h3>There is no record of users</h3>" .'</td></tr>':'';
                                         					 $count=0;$i=0; foreach($alladmins as $admin): $count=$count++;$i=$i+1;?>
                                         					<tr class="<?php if(($count % 2)==0){echo 'even';}else{echo 'odd';} ?>">
                                         						<td><?php echo $i;?></td>
@@ -74,7 +77,9 @@
                                                     <td><?php echo $admin->email;?></td>
                                                     <td><?php if($admin->status){echo $admin->status;}else{ echo 'None';}?></td>
                                                     <td><?php echo $admin->country;?></td>
-                                                    <td><a href="<?php echo base_url('admin/userverification/edit/').$admin->user_id;?>" title="More Details"> <i class="fa fa-info-circle" aria-hidden="true"></i> </a></td>
+                                                    <td><a href="<?php echo base_url('admin/userverification/edit/').$admin->user_id;?>" title="More Details"> <i class="fa fa-info-circle" aria-hidden="true"></i> </a>
+													<a style="float: right;" onclick="return confirm('Are you sure?, You want to decline user profile.')" href="<?php echo base_url('admin/userverification/delete/').$admin->user_id;?>" title="Decline user profile"> <i class="fa fa-trash" aria-hidden="true"></i> </a>
+													</td>
                                                     </tr>
                                                     <?php endforeach; ?>
 
@@ -84,13 +89,7 @@
                                           <div class="paging_bootstrap" id="datatable-table_paginate">
                                             <?php echo $this->pagination->create_links();?>
                                           </div>
-                                            <!--<ul class="pagination">
-                                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                            </ul>-->
+                                            
                                         </div>
 
                                     </section>

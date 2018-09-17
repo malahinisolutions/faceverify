@@ -73,18 +73,20 @@
                                         <div class="panel panel-default pull-left" style="width:100%;">
                                           <div class="clearfix"><?php include('validation_message.php'); ?></div>
                                             <div class="panel-body">
+											<?php foreach($comments as $comment){ ?>
+											
+											<div class="col-md-12 form-control" style="padding:5px;margin-bottom:10px;" >
+											<p style="margin-bottom:5px;">Comment: <?php echo $comment->comment;?></p>
+                                            <p style="margin-bottom:5px;">Status: <?php if($comment->status =='cancelled'){echo 'Decline';}else{echo 'Accept';};?> Verified By: <?php echo $comment->verified_by;?> Verified At: <?php echo $comment->verification_at;?></p>
+                                            </div>
+											<?php } ?>
                                                 <form accept-charset="UTF-8" action="<?php echo base_url('admin/userverification/edit/').$user_id;?>" method="POST">
-                                                    <textarea class="form-control counted" name="comment"  placeholder="Type in your comment" rows="5" style="margin-bottom:10px;"><?php if($comment){echo $comment;}?></textarea>
-                                                    <?php if(!$comment){?>
+                                                    <textarea class="form-control counted" name="comment"  placeholder="Type in your comment" rows="5" style="margin-bottom:10px;"></textarea>               
                                                      <div class="col-md-12" style="padding:0px;" >
                                                        <input class="btn btn-success pull-right" name="processed" type="submit" value="Accept">
                                                       <input class="btn btn-danger pull-right" name="cancelled" style="margin-right: 20px;"  type="submit" value="Decline">
                                                     </div>
-                                                    <?php }else{ ?>
-                                                      <div class="col-md-12" style="padding:0px;" >
-                                                        <p>Verified By: <?php echo $verified_by;?> Verified At: <?php echo $verification_at;?></p>
-                                                      </div>
-                                                      <?php } ?>
+                                                     
                                                 </form>
                                             </div>
                                         </div>

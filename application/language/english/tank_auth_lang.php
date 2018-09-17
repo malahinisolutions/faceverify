@@ -36,7 +36,7 @@ $lang['auth_message_not_activated'] = 'Your account not activated.';
 $lang['auth_message_unregistered'] = 'Your account has been deleted...';
 $lang['auth_message_valid_email'] = 'The email field must contain a valid email address.';
 $lang['auth_message_document_updated']='You have successfully uploaded document.';
-$lang['auth_message_document_inserted']='You have successfully save document.';
+$lang['auth_message_document_inserted']='You have successfully uploaded document.';
 // Email subjects
 $lang['auth_subject_welcome'] = 'Welcome to %s!';
 $lang['auth_subject_activate'] = 'Welcome to %s!';

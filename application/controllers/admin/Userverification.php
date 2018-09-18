@@ -101,10 +101,25 @@ class Userverification extends Admin_Controller {
 	$data['document_type']=$userdata->document_type;
 	$data['document_path']=$userdata->document_path;
 	$data['user_image']=$userdata->user_image;
-	//$data['comment']=$comment->comment;
-	//$data['verified_by']=$comment->verified_by;
-	//$data['verification_at']=$comment->verification_at;
-
+	$data['admin_note_data']=$this->users->get_admin_note($id);
+	
+	if($this->input->post('addadmin_note'))
+	{
+		$admindata=array('user_id'=>$id,'note'=>$this->input->post('addnote'),
+		'date'=>date("Y-m-d",strtotime($this->input->post('adddate'))),'created_at'=>date('Y-m-d H:i:s'),);
+		
+		$this->users->save_admin_note($admindata);
+		$data['admin_note_data']=$this->users->get_admin_note($id);
+		$this->session->set_flashdata('message', 'Admin note submitted successfully');
+	}
+	if($this->input->post('editadmin_note'))
+	{
+		$updateadmindata=array('note'=>$this->input->post('editnote'),
+		'date'=>date("Y-m-d",strtotime($this->input->post('editdate'))),'created_at'=>date('Y-m-d H:i:s'),);
+		$this->users->update_admin_note($id,$updateadmindata);
+		$data['admin_note_data']=$this->users->get_admin_note($id);
+		$this->session->set_flashdata('message', 'Admin note updated successfully');
+	}
 
   if($this->input->post('processed'))
   {
@@ -122,6 +137,7 @@ class Userverification extends Admin_Controller {
 	$this->users->insert_user_verifications_comment($userData);
    $this->session->set_flashdata('message', 'Information updated successfully');
    $data['comments']=$this->users->get_comment_by_id($id);
+   $data['admin_note_data']=$this->users->get_admin_note($id);
   }
 	if($this->input->post('cancelled')){
 		$userData = array(
@@ -137,11 +153,12 @@ class Userverification extends Admin_Controller {
 		$this->users->insert_user_verifications_comment($userData);
 		$this->session->set_flashdata('message', 'Information updated successfully');
 		$data['comments']=$this->users->get_comment_by_id($id);
+		$data['admin_note_data']=$this->users->get_admin_note($id);
 	}
   $this->view('admin/details_view.php',$data);
   }
   
-  function delete($id)
+  function deactivate_user($id)
   {
 	  if(!is_null($datas=$this->users->get_user_verifications_by_ids($id)))
 	  {
@@ -160,6 +177,7 @@ class Userverification extends Admin_Controller {
 			 unlink(FCPATH."upload/documents/".$datas->document_path);
 		 }
 		 $data['status']='decline';
+		 $data['user_id']=$id;
 		 $data['document_type']=$datas->document_type;
 		 $profile=$this->users->get_profile_details($id);
 		 $data['email']=$profile->email;
@@ -189,10 +207,10 @@ class Userverification extends Admin_Controller {
 			 $this->users->insert_user_old_comment($save);
 		 }
 		 $this->users->delete_profile($id);
-		 $this->users->delete_userdata($id);
+		 $this->users->deactivate_user_profile($id);
 		 $this->users->delete_user_verifications($id);
 		 $this->users->delete_comment($id);
-		 $this->session->set_flashdata('message', 'User profile has been decline successfully');
+		 $this->session->set_flashdata('message', 'User profile has been deactivated successfully');
 		 redirect('userverification');
 		 
 		 

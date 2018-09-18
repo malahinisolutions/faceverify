@@ -9,7 +9,7 @@
                                 <div class="example">
                                     <div class="header-user">
                                         <p>
-                                            DECLINE USER VERIFICATION DETAILS
+                                            DEACTIVATED USER VERIFICATION DETAILS
                                             <span class="back-buttion"> <a href="<?php echo base_url('admin/decline_user');?>"> <i class="fa fa-arrow-left" aria-hidden="true"></i> Back </a> </span>
                                         </p>
 

@@ -31,7 +31,7 @@ $lang['auth_message_new_email_sent'] = 'A confirmation email has been sent to %s
 $lang['auth_message_new_email_activated'] = 'You have successfully changed your email';
 $lang['auth_message_profile_updated'] = 'You have successfully update your profile.';
 $lang['auth_message_new_email_failed'] = 'Your activation key is incorrect or expired. Please check your email again and follow the instructions.';
-$lang['auth_message_banned'] = 'You are banned.';
+$lang['auth_message_banned'] = 'Your account has been deactivated by admin.';
 $lang['auth_message_not_activated'] = 'Your account not activated.';
 $lang['auth_message_unregistered'] = 'Your account has been deleted...';
 $lang['auth_message_valid_email'] = 'The email field must contain a valid email address.';
@@ -39,6 +39,7 @@ $lang['auth_message_document_updated']='You have successfully uploaded document.
 $lang['auth_message_document_inserted']='You have successfully uploaded document.';
 // Email subjects
 $lang['auth_subject_welcome'] = 'Welcome to %s!';
+$lang['auth_subject_adminactivate'] = 'Your account has been activated.';
 $lang['auth_subject_activate'] = 'Welcome to %s!';
 $lang['auth_subject_forgot_password'] = 'Forgot your password on %s?';
 $lang['auth_subject_forgot_passwords'] = 'Forgot your password on %s?';
@@ -54,5 +55,6 @@ $lang['country'] = 'Country';
 $lang['state'] = 'State';
 $lang['city'] = 'City';
 $lang['zipcode'] = 'Zipcode';
+$lang['updated_at'] = 'updated_at';
 /* End of file tank_auth_lang.php */
 /* Location: ./application/language/english/tank_auth_lang.php */

@@ -510,10 +510,17 @@ class Users extends CI_Model
 		$this->db->delete($this->profile_table_name);
 	}
 	
-	function delete_userdata($user_id)
+	function deactivate_user_profile($user_id)
 	{
 		$this->db->where('id', $user_id);
-		$this->db->delete($this->table_name);
+		$this->db->update($this->table_name,array('banned'=>'1'));
+		return true;
+	}
+	function activate_user_profile($user_id)
+	{
+		$this->db->where('id', $user_id);
+		$this->db->update($this->table_name,array('banned'=>'0'));
+		return true;
 	}
 	function delete_user_verifications($user_id)
 	{
@@ -626,6 +633,12 @@ class Users extends CI_Model
 		$this->db->insert('decline_users', $data);
 		return $this->db->insert_id();
 	}
+	function update_decline_user_details($user_id,$save)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->update('decline_users', $save);
+		return true;
+	}
 
 	/**
 	 * Get admin user record by email
@@ -707,12 +720,37 @@ class Users extends CI_Model
 		if ($query->num_rows() == 1) return $query->row();
 		return NULL;
 	}
+	function get_decline_user_profile_details_by_user_id($id)
+	{
+		$this->db->where('user_id', $id);
+		$query = $this->db->get('decline_users');
+		if ($query->num_rows() == 1) return $query->row();
+		return NULL;
+	}
 	function get_decline_user_comment_by_id($id)
 	{
 		$this->db->where('user_id', $id);
 		$this->db->order_by('created_at', 'ASC');		
 		$query = $this->db->get('oldcomment');
 		return $query->result();
+	}
+	function save_admin_note($save)
+	{
+		$this->db->insert('admin_note', $save);
+		return true;
+	}
+	function update_admin_note($id,$save)
+	{
+		$this->db->where('user_id', $id);
+		$this->db->update('admin_note', $save);
+		return true;
+	}
+	function get_admin_note($id)
+	{
+		$this->db->where('user_id', $id);
+		$query = $this->db->get('admin_note');
+		if ($query->num_rows() == 1) return $query->row();
+		return NULL;
 	}
 
 

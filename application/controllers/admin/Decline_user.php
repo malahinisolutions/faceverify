@@ -107,6 +107,23 @@ class Decline_user extends Admin_Controller {
   $this->view('admin/declineuser_details_view',$data);
   }
   
+  function activate_user($user_id)
+  { 
+	  $this->users->activate_user_profile($user_id);
+	  $save['updated_at']=date('Y-m-d H:i:s');
+	  $this->users->update_decline_user_details($user_id,$save);
+	  
+	  if(!is_null($profiledata=$this->users->get_decline_user_profile_details_by_user_id($user_id)))
+	  {
+		  $data['site_name']=$this->config->item('website_name', 'tank_auth');
+		  $data['email']=$profiledata->email;
+		$this->tank_auth->send_email('adminactivate', $profiledata->email, $data);  
+	  }
+	  $this->session->set_flashdata('message', 'User profile has been activated successfully');
+	  
+	  redirect('decline_user');
+  }
+  
    
 
 }

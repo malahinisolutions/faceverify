@@ -1,3 +1,5 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
 <article class="content responsive-tables-page">
     <section class="section">
             <div class="row">
@@ -5,7 +7,7 @@
                     <div class="card">
                         <div class="card-block">
                             <div class="col-md-9">
-
+							
                                 <div class="example">
                                     <div class="header-user">
                                         <p>
@@ -13,7 +15,7 @@
                                             <span class="back-buttion"> <a href="<?php echo base_url('admin/userverification');?>"> <i class="fa fa-arrow-left" aria-hidden="true"></i> Back </a> </span>
                                         </p>
 
-                                    </div>
+                                    </div><div class="clearfix"><?php include('validation_message.php'); ?></div>
                                     <div class="panel panel-default">
                                         <div class="panel-heading"> <i class="fa fa-asterisk" aria-hidden="true"></i> User Details  </div>
                                         <div class="table-responsive" style="padding: 10px;">
@@ -71,7 +73,7 @@
 
                                     <div class="col-sm-12 col-md-12" style="padding:0px;">
                                         <div class="panel panel-default pull-left" style="width:100%;">
-                                          <div class="clearfix"><?php include('validation_message.php'); ?></div>
+                                          
                                             <div class="panel-body">
 											<?php foreach($comments as $comment){ ?>
 											
@@ -104,11 +106,27 @@
                                            <div class="panel-heading">	<i class="fa fa-user" aria-hidden="true"></i> User Photo </div>
                                            <div class="panel-body"> <a  href="#full-width" data-toggle="modal"><img src="<?php echo base_url('upload/user/').$user_image;?>" style="width:100%;" /> </a></div>
                                        </div>
-
-
-
-
                                </div>
+							   <div class="right-section">
+							   <div class="panel panel-default">
+							   <div class="panel-heading"> <i class="fa fa-address-card" aria-hidden="true"></i> Admin Note</div>
+							   <div class="panel-body">
+							   <?php if(!is_null($admin_note_data)){ ?> 
+							   <form accept-charset="UTF-8" action="<?php echo base_url('admin/userverification/edit/').$user_id;?>" method="POST">
+							   <textarea class="form-control counted" name="editnote"  placeholder="Type in your note" rows="4" style="margin-bottom:10px;"><?php echo $admin_note_data->note;?></textarea>
+							   <input id="datepicker"   class="form-control input-group date" type="text" name="editdate" placeholder="Select date" value="<?php echo date("m/d/Y",strtotime($admin_note_data->date));?>" style="margin-bottom:10px;">
+							   <input class="btn btn-success" name="editadmin_note" type="submit" value="Save" style="margin-bottom:10px;">
+							   </form>
+							   <?php }else{ ?>
+							   <form accept-charset="UTF-8" action="<?php echo base_url('admin/userverification/edit/').$user_id;?>" method="POST">
+							   <textarea class="form-control counted" name="addnote"  placeholder="Type in your note" rows="4" style="margin-bottom:10px;"></textarea>
+							   <input id="datepicker"   class="form-control input-group date" type="text" name="adddate" placeholder="Select date" style="margin-bottom:10px;">
+							   <input class="btn btn-success" name="addadmin_note" type="submit" value="Save" style="margin-bottom:10px;">
+							   </form>
+							   <?php }?>
+							   </div>
+							   </div>
+							   </div>
                             </div>
                             </div>
 
@@ -134,3 +152,17 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script><script>
+$(document).ready(function () {
+    $('#datepicker').datepicker({
+      uiLibrary: 'bootstrap',
+	   format: "dd/mm/yyyy",
+            language: "es",
+            autoclose: true,
+            todayHighlight: true,
+			minDate: 0
+    });
+});
+</script>

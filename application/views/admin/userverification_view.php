@@ -39,7 +39,7 @@
                                             <div class="clearfix"><?php include('validation_message.php'); ?></div>
                                         </div>
                                             <div class="col-lg-3">
-											<a class="btn btn-success pull-right" href="<?php echo  base_url('admin/decline_user');?>">Decline User List</a>
+											<a class="btn btn-success pull-right" href="<?php echo  base_url('admin/decline_user');?>">Deactivated User List</a>
 											<form accept-charset="UTF-8" action="<?php echo base_url('admin/userverification');?>" method="POST">
                                                 <div class="input-group custom-search-form">
                                                     <input type="text" name="search" placeholder="Search" class="form-control">
@@ -78,7 +78,7 @@
                                                     <td><?php if($admin->status){echo $admin->status;}else{ echo 'None';}?></td>
                                                     <td><?php echo $admin->country;?></td>
                                                     <td><a href="<?php echo base_url('admin/userverification/edit/').$admin->user_id;?>" title="More Details"> <i class="fa fa-info-circle" aria-hidden="true"></i> </a>
-													<a style="float: right;" onclick="return confirm('Are you sure?, You want to decline user profile.')" href="<?php echo base_url('admin/userverification/delete/').$admin->user_id;?>" title="Decline user profile"> <i class="fa fa-trash" aria-hidden="true"></i> </a>
+													<a style="float: right;" onclick="return confirm('Are you sure?, You want to deactivate user profile.')" href="<?php echo base_url('admin/userverification/deactivate_user/').$admin->user_id;?>" title="Deactivate user profile"> <i class="fa fa-times-circle" aria-hidden="true" style="color:red;"></i> </a>
 													</td>
                                                     </tr>
                                                     <?php endforeach; ?>

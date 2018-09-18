@@ -60,7 +60,8 @@ class Login extends Front_Controller {
 				} else {
 					$errors = $this->tank_auth->get_error_message();
 					if (isset($errors['banned'])) {								// banned user
-						$this->session->set_flashdata('error', $this->lang->line('auth_message_banned').' '.$errors['banned']);
+						//$this->session->set_flashdata('error', $this->lang->line('auth_message_banned').' '.$errors['banned']);
+						$this->session->set_flashdata('error', $this->lang->line('auth_message_banned'));
 
 					} elseif (isset($errors['not_activated'])) {		 	// not activated user
             $this->session->set_flashdata('error', $this->lang->line('auth_message_not_activated'));

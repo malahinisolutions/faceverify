@@ -35,7 +35,7 @@
                                 <div class="card-block">
                                     <div class="card-title-block">
                                         <div class="col-lg-9">
-                                            <h3 class="title"> <i class="fa fa-certificate" aria-hidden="true"></i> Welcome Admin, Below is the list of Declined users. </h3>
+                                            <h3 class="title"> <i class="fa fa-certificate" aria-hidden="true"></i> Welcome Admin, Below is the list of Deactivated users. </h3>
                                             <div class="clearfix"><?php include('validation_message.php'); ?></div>
                                         </div>
                                             <div class="col-lg-3">
@@ -63,6 +63,7 @@
                                                         <th><?php echo sort_url('email', 'email', $sort_by, $sort_order); ?></th>
                                                         <th><?php echo sort_url('status', 'status', $sort_by, $sort_order); ?></th>
                                                         <th><?php echo sort_url('country', 'country', $sort_by, $sort_order); ?></th>
+														<th><?php echo sort_url('updated_at', 'updated_at', $sort_by, $sort_order); ?></th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -77,8 +78,12 @@
                                                     <td><?php echo $admin->email;?></td>
                                                     <td><?php if($admin->status){echo $admin->status;}else{ echo 'None';}?></td>
                                                     <td><?php echo $admin->country;?></td>
+													<td><?php echo $admin->updated_at;?></td>
                                                     <td><a href="<?php echo base_url('admin/decline_user/edit/').$admin->id;?>" title="More Details"> <i class="fa fa-info-circle" aria-hidden="true"></i> </a>
-													
+													<?php $data=$this->users->get_user_by_id($admin->user_id,'1');
+															if($data && $data->banned!=0){?>
+													<a style="float: right;" onclick="return confirm('Are you sure?, You want to activate user profile.')" href="<?php echo base_url('admin/decline_user/activate_user/').$admin->user_id;?>" title="Activate user profile"> <i class="fa fa-check-circle" aria-hidden="true" style="color:#0dcc7e;"></i> </a>
+															<?php } ?>
 													</td>
                                                     </tr>
                                                     <?php endforeach; ?>

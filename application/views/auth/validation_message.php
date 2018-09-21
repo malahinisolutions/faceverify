@@ -25,6 +25,6 @@
 					<div class="alert alert-danger col-lg-12 center" style="margin-bottom:10px !important;text-align: left !important;">
 						<button type="button" class="close" data-dismiss="alert" style="color:#fff;opacity: 0.7 !important;"><i class="fa fa-times"></i></button>
 						<h4><i class="glyphicon glyphicon-ban-circle"></i> <strong>Oh! You got an error!</strong></h4>
-						<p><?php echo($error); ?></p>
+						<p><?php if(is_array($error)){echo $error['error'];}else{echo($error);} ?></p>
 					</div>
 					<?php endif; ?> 

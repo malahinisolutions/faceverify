@@ -56,7 +56,7 @@ class Authenticate extends Front_Controller {
 		$base64_newimage=base64_encode(file_get_contents($newimage));
 		$data=json_encode(array('photo_one'=>$base64_oldimage,'photo_two'=>$base64_newimage,'type'=>'face'));
 		$headers = array('Content-Type: application/json',); 
-		$url = 'http://18.217.212.166/api/v1/compare'; 
+		$url = 'http://52.15.108.199/api/v1/compare'; 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_URL, $url);
